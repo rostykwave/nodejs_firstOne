@@ -4,7 +4,8 @@ const got = require("got");
 const app = express();
 
 const { router } = require("./booksRouter");
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
+// const PORT = 8081;
 const thirdPartyBaseUrl = "http://api.weatherbit.io/v2.0/current";
 
 app.use(express.json());
@@ -24,10 +25,11 @@ app.get("/api/weather", async (req, res) => {
   try {
     const response = await got(thirdPartyBaseUrl, {
       searchParams: {
-        key: "ea41bc3d393b41638cdd827b88acf3ef",
+        key: process.env.WEATHER_API_KEY || "ea41bc3d393b41638cdd827b88acf3ef",
         lat: "50.427107",
         lon: "30.567437",
       },
+      responseType: "json",
     });
     res.json({ response: response.body });
   } catch (err) {
