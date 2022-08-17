@@ -20,7 +20,7 @@ app.use("/api", router);
 
 //http://api.weatherbit.io/v2.0/current?key=ea41bc3d393b41638cdd827b88acf3ef&lat=50.427107&lon=30.567437
 
-app.get("api/weather", async (req, res) => {
+app.get("/api/weather", async (req, res) => {
   try {
     const response = await got(thirdPartyBaseUrl, {
       searchParams: {
@@ -29,7 +29,7 @@ app.get("api/weather", async (req, res) => {
         lon: "30.567437",
       },
     });
-    res.json({ response });
+    res.json({ response: response.body });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
