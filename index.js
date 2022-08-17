@@ -1,10 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
 const got = require("got");
+const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-const { router } = require("./booksRouter");
+// const { router } = require("./booksRouter");
 const PORT = process.env.PORT;
 // const PORT = process.env.PORT || 8081;//without dotenv
 // const PORT = 8081;
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(morgan("tiny"));
-app.use("/api", router);
+app.use(cors());
+// app.use("/api", router);
 
 // app.use((req, res, next) => {
 //   console.log(`${req.method} ${req.originalUrl} ${new Date().toISOString()}`);
@@ -26,11 +28,26 @@ app.use("/api", router);
 
 app.get("/api/weather", async (req, res) => {
   try {
+    const { latitude, longitude } = req.query;
+
+    if (!latitude) {
+      return res
+        .status(400)
+        .json({ message: "latitude parameter is mandatory" });
+    }
+    if (!longitude) {
+      return res
+        .status(400)
+        .json({ message: "longitude parameter is mandatory" });
+    }
+
     const response = await got(thirdPartyBaseUrl, {
       searchParams: {
         key: thirdPartyApiKey,
-        lat: "50.427107",
-        lon: "30.567437",
+        lat: latitude,
+        lon: longitude,
+        // lat: "50.427107",
+        // lon: "30.567437",
       },
       responseType: "json",
     });
