@@ -6,7 +6,7 @@ const app = express();
 require("dotenv").config();
 
 // const { router } = require("./booksRouter");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8081;
 // const PORT = process.env.PORT || 8081;//without dotenv
 // const PORT = 8081;
 const thirdPartyBaseUrl = "http://api.weatherbit.io/v2.0/current";
