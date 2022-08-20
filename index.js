@@ -15,15 +15,23 @@ app.use(morgan('dev'));
 
 app.use('/api/posts', postsRouter);
 
-const start = async () => {
-  await connectMongo();
+app.use((error, req, res, next) => {
+  res.status(500).json({ message: error.message });
+});
 
-  app.listen(PORT, err => {
-    if (err) {
-      console.error('Error at a servers launch: ', err);
-    }
-    console.log(`Server works at port ${PORT}!`);
-  });
+const start = async () => {
+  try {
+    await connectMongo();
+
+    app.listen(PORT, err => {
+      if (err) {
+        console.error('Error at a servers launch: ', err);
+      }
+      console.log(`Server works at port ${PORT}!`);
+    });
+  } catch (error) {
+    console.error(`Failed to launch application with error: ${error.message}`);
+  }
 };
 
 start();
