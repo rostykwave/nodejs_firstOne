@@ -1,4 +1,5 @@
 const { Post } = require('../db/postModel');
+const { WromgParametersError } = require('../helpers/errors');
 
 const getPosts = async () => {
   const posts = await Post.find({});
@@ -8,9 +9,10 @@ const getPosts = async () => {
 const getPostById = async id => {
   const post = await Post.findById(id);
   if (!post) {
-    return res
-      .status(400)
-      .json({ status: `failure, no post with id ${id} found` });
+    // return res
+    //   .status(400)
+    //   .json({ status: `failure, no post with id ${id} found` });
+    throw new WromgParametersError(`failure, no post with id ${id} found`);
   }
   return post;
 };

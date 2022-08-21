@@ -7,6 +7,7 @@ const app = express();
 const { connectMongo } = require('./src/db/connection');
 
 const { postsRouter } = require('./src/routers/postsRouter');
+const { errorHandler } = require('./src/helpers/apiHelpers');
 
 const PORT = process.env.PORT || 8081;
 
@@ -15,9 +16,11 @@ app.use(morgan('dev'));
 
 app.use('/api/posts', postsRouter);
 
-app.use((error, req, res, next) => {
-  res.status(500).json({ message: error.message });
-});
+//custom error
+app.use(errorHandler);
+// app.use((error, req, res, next) => {
+//   res.status(500).json({ message: error.message });
+// });
 
 const start = async () => {
   try {
