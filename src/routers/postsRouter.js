@@ -3,20 +3,17 @@ const router = new express.Router();
 
 const { addPostsValidation } = require('../middlewares/validationMiddleware');
 const { asyncWrapper } = require('../helpers/apiHelpers');
-const modelsMiddleware = require('../middlewares/models');
 const {
-  getPosts,
-  getPostById,
-  addPost,
-  changePost,
-  deletePost,
+  getPostsController,
+  getPostByIdController,
+  addPostController,
+  changePostController,
+  deletePostController,
 } = require('../controllers/postsController');
 
-router.use(modelsMiddleware);
-
-router.get('/', asyncWrapper(getPosts));
-router.get('/:id', asyncWrapper(getPostById));
-router.post('/', addPostsValidation, asyncWrapper(addPost));
-router.put('/:id', addPostsValidation, asyncWrapper(changePost));
-router.delete('/:id', asyncWrapper(deletePost));
+router.get('/', asyncWrapper(getPostsController));
+router.get('/:id', asyncWrapper(getPostByIdController));
+router.post('/', addPostsValidation, asyncWrapper(addPostController));
+router.put('/:id', addPostsValidation, asyncWrapper(changePostController));
+router.delete('/:id', asyncWrapper(deletePostController));
 module.exports = { postsRouter: router };
