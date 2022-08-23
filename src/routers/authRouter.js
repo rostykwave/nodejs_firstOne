@@ -3,15 +3,12 @@ const router = new express.Router();
 
 // const { addPostsValidation } = require('../middlewares/validationMiddleware');
 const { asyncWrapper } = require('../helpers/apiHelpers');
-// const {
-//   getPostsController,
-//   getPostByIdController,
-//   addPostController,
-//   changePostController,
-//   deletePostController,
-// } = require('../controllers/postsController');
+const {
+  registrationController,
+  loginController,
+} = require('../controllers/authController');
 
-router.post('/', asyncWrapper(postPostsController));
-router.post('/:id', asyncWrapper(getPostByIdController));
+router.post('/registration', asyncWrapper(registrationController));
+router.post('/login', asyncWrapper(loginController));
 
 module.exports = { authRouter: router };
