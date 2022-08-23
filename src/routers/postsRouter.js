@@ -13,6 +13,7 @@ const {
 } = require('../controllers/postsController');
 
 router.use(authMiddleware);
+
 router.get('/', asyncWrapper(getPostsController));
 router.get('/:id', asyncWrapper(getPostByIdController));
 router.post('/', addPostsValidation, asyncWrapper(addPostController));
