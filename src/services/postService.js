@@ -9,12 +9,10 @@ const getPosts = async userId => {
   return posts;
 };
 
-const getPostById = async postId => {
+const getPostById = async (postId, userId) => {
   const post = await Post.findOne({ _id: postId, userId });
+
   if (!post) {
-    // return res
-    //   .status(400)
-    //   .json({ status: `failure, no post with id ${id} found` });
     throw new WromgParametersError(`failure, no post with id ${postId} found`);
   }
   return post;
@@ -34,7 +32,7 @@ const changePostById = async (postId, { topic, text }, userId) => {
 };
 
 const deletePostById = async (postId, userId) => {
-  await Post.findOneAndRemove({ _id: postId }, userId);
+  await Post.findOneAndRemove({ _id: postId, userId });
 };
 
 module.exports = {

@@ -16,6 +16,7 @@ const getPostsController = async (req, res) => {
 const getPostByIdController = async (req, res) => {
   const { id: postId } = req.params;
   const { _id: userId } = req.user;
+
   const post = await getPostById(postId, userId);
 
   res.json({ post, status: 'success' });
@@ -40,8 +41,8 @@ const changePostController = async (req, res) => {
 };
 
 const deletePostController = async (req, res) => {
-  const { _id: userId } = req.user;
   const { id: postId } = req.params;
+  const { _id: userId } = req.user;
   await deletePostById(postId, userId);
   res.json({ status: 'success' });
 };
