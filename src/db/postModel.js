@@ -6,11 +6,11 @@ const postSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  userId: {
+  text: {
     type: String,
     required: true,
   },
-  text: {
+  userId: {
     type: String,
     required: true,
   },
