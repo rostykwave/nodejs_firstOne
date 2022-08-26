@@ -8,6 +8,7 @@ const { connectMongo } = require('./src/db/connection');
 
 const { postsRouter } = require('./src/routers/postsRouter');
 const { authRouter } = require('./src/routers/authRouter');
+const { filesRouter } = require('./src/routers/filesRouter');
 const { errorHandler } = require('./src/helpers/apiHelpers');
 
 const PORT = process.env.PORT || 8081;
@@ -17,12 +18,10 @@ app.use(morgan('dev'));
 
 app.use('/api/posts', postsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/files', filesRouter);
 
 //custom error
 app.use(errorHandler);
-// app.use((error, req, res, next) => {
-//   res.status(500).json({ message: error.message });
-// });
 
 const start = async () => {
   try {
