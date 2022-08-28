@@ -1,15 +1,20 @@
 const express = require('express');
 const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
+
+const FILE_DIR = path.resolve('./tmp');
 
 const router = new express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.resolve('../../tmp'));
+    cb(null, FILE_DIR);
   },
   filename: (req, file, cb) => {
-    const [filename, extension] = file.originalname.split('.');
-    cb(null, `${filename}.${extension}`);
+    const [_, extension] = file.originalname.split('.');
+    cb(null, `${uuidv4()}.${extension}`);
+    // const [filename, extension] = file.originalname.split('.');
+    // cb(null, `${filename}.${extension}`);
   },
 });
 
@@ -22,5 +27,6 @@ router.post(
   uploadMiddleware.single('avatar'),
   asyncWrapper(uploadController)
 );
+router.use('/download', express.static(FILE_DIR));
 
 module.exports = { filesRouter: router };
