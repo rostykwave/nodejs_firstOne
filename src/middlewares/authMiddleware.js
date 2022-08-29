@@ -14,14 +14,13 @@ const authMiddleware = (req, res, next) => {
       );
     }
 
-    const [tokenType, token] = authorization.split(' ');
+    const [_, token] = authorization.split(' ');
 
     if (!token) {
       next(new NotAuthorizedError('Please, provide a token'));
     }
 
     const user = jwt.decode(token, process.env.JWT_SECRET);
-    console.log('user', user);
 
     req.token = token;
     req.user = user;

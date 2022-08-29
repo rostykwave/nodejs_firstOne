@@ -1,8 +1,5 @@
 const { Post } = require('../db/postModel');
-const {
-  WromgParametersError,
-  NotAuthorizedError,
-} = require('../helpers/errors');
+const { WromgParametersError } = require('../helpers/errors');
 
 const getPosts = async (userId, { skip, limit }) => {
   const posts = await Post.find({ userId })
